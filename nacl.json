@@ -13,17 +13,39 @@
         "group": "user",
         "permissions": [
             {
-                "resource": "foo/",
-                "methods": [
-                    "POST",
-                    "GET",
-                    "PUT"
-                ],
+                "resource": "dashboard/*",
+                "methods": "*",
                 "action": "deny"
             },
             {
                 "resource": "*",
                 "methods": "*",
+                "action": "allow"
+            }
+        ]
+    },
+    {
+        "group": "guest",
+        "permissions": [
+            {
+                "resource": "/",
+                "methods": [
+                    "GET"
+                ],
+                "action": "allow"
+            },
+            {
+                "resource": "users/login",
+                "methods": [
+                    "POST"
+                ],
+                "action": "allow"
+            },
+            {
+                "resource": "users/register",
+                "methods": [
+                    "POST"
+                ],
                 "action": "allow"
             }
         ]

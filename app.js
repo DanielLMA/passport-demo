@@ -42,7 +42,8 @@ mongoose.connect('mongodb://localhost/express-mongo-passport', (err) => {
 
 // authorization
 acl.config({
-  defaultRole: 'user'
+  filename: 'nacl.json',
+  defaultRole: 'guest'
 })
 
 app.use(acl.authorize)

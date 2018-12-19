@@ -11,7 +11,7 @@ router.post('/register', (req, res) => {
     }
     // Log the new user in (Passport will create a session) using the local strategy
     passport.authenticate('local')(req, res, () => {
-      req.session.role = req.user.role || 'user'
+      req.session.role = req.user.role || 'guest'
       res.sendStatus(200)
     });
   });
@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
 
 // Login an existing user
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  req.session.role = req.user.role || 'user'
+  req.session.role = req.user.role || 'guest'
   res.sendStatus(200)
 });
 
