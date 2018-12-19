@@ -5,29 +5,22 @@ const router = express.Router();
 
 // Register a new user
 router.post('/register', (req, res) => {
-  User.register(new User({ email: req.body.email }), req.body.password, (err) => {
+  User.register(new User({ email: req.body.email, role: 'user' }), req.body.password, (err) => {
     if (err) {
       return res.status(500).send(err.message);
     }
     // Log the new user in (Passport will create a session) using the local strategy
     passport.authenticate('local')(req, res, () => {
-      // req.user exists at this point.
-      // Normally we wouldn't send back the entire user object - this is for learning purposes.
-      // Instead, we might send back only the username or email, or even just a status code.
-      res.json(req.user)
-      // res.sendStatus(200)
+      req.session.role = req.user.role || 'user'
+      res.sendStatus(200)
     });
   });
 });
 
 // Login an existing user
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  // At this point, authentication was successful and req.user exists.
-
-  // Normally we wouldn't send back the entire user object - this is for learning purposes.
-  // Instead, we might send back only the username or email, or even just a status code.
-  res.json(req.user)
-  // res.sendStatus(200)
+  req.session.role = req.user.role || 'user'
+  res.sendStatus(200)
 });
 
 // Logout the current user
